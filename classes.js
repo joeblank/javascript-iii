@@ -21,7 +21,17 @@ Each employee can:
 
 call your class Employee and receive all the data in the constructor in the order listed
 */
-
+class Employee {
+    constructor(firstName, lastName, email, age) {
+        this.first_name = firstName;
+        this.last_name = lastName;
+        this.email = email;
+        this.age = age;
+    }
+    makeWidget() {
+        return `${this.first_name} ${this.last_name} Widget`;
+    }
+}
 
 
 /*
@@ -40,7 +50,21 @@ They can (methods) :
 call your class Manager
 
 */
-
+class Manager {
+    constructor(firstName, lastName, email, age) {
+        this.first_name = firstName;
+        this.last_name = lastName;
+        this.email = email;
+        this.age = age;
+        this.reports = [];
+    }
+    hire(emp) {
+        this.reports.push(emp);
+    }
+    fire(index) {
+        this.reports.splice(index, 1);
+    }
+}
 
 
 
@@ -64,7 +88,44 @@ Everytime they fire an employee they get a bonus of $100 add to their .
 
 call you class ProgressiveManager
 */
+class ProgressiveManager {
+    constructor(firstName, lastName, email, age) {
+        this.first_name = firstName;
+        this.last_name = lastName;
+        this.email = email;
+        this.age = age;
+        this.reports = [];
+        this.title =  'Not a manager';
+        this.bonus = 0;
+    }
 
+    titleCheck(hireCount) {
+        if ( hireCount > 100) {
+            this.title = 'Bestest Manager';
+        } else if ( hireCount > 50 ) {
+            this.title = 'Manager Plus';
+        } else if ( hireCount > 10 ) {
+            this.title = 'Manager';
+        } else if ( hireCount > 3 ) {
+            this.title = 'Mostly Manager';
+        } else if ( hireCount > 0 ) {
+            this.title = 'Barely Manager';
+        } else if ( hireCount === 0 ) {
+            this.title = 'Not a manager';
+        }
+    }
+
+    hire(emp) {
+        this.reports.push(emp);
+        this.titleCheck(this.reports.length)
+    }
+    fire(index) {
+        this.reports.splice(index, 1);
+        this.bonus += 100;
+        this.titleCheck(this.reports.length)
+        
+    }
+}
 
 
 
@@ -90,3 +151,23 @@ It can :
       It should set decrease wear_and_tear_count by 10, and set needs_reboot to false
 
 */
+class Machine {
+    constructor() {
+        this.widgets_made_count = 0;
+        this.wear_and_tear_count = 0;
+        this.needs_reboot = false;
+    }
+    makeWidgets(num) {
+        this.widgets_made_count += num;
+        this.wear_and_tear_count += Math.floor(num / 50);
+    } 
+    fixMachine() {
+        this.needs_reboot = true;
+    } 
+    reboot() {
+        return () => {
+            this.needs_reboot =  false;
+            this.wear_and_tear_count -= 10;
+        }
+    }
+}
